@@ -1,8 +1,10 @@
+from random import randint
+
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
 def encrypt(data, key):
     if key > 25 or key < 1:
-        return ("key ist nicht im gültigen Bereich (0 - 26)!")
+        return ("key is not in valid range (0 - 26)!")
     encryptedData = ""
     charCount = len(alphabet)
     for c in data:
@@ -17,7 +19,7 @@ def encrypt(data, key):
 
 def decrypt(data, key):
     if key > 25 or key < 1:
-        return ("key ist nicht im gültigen Bereich (0 - 26)!")
+        return ("key is not in valid range (0 - 26)!")
     decryptedData = ""
     charCount = len(alphabet)
     for c in data:
@@ -30,11 +32,22 @@ def decrypt(data, key):
         decryptedData = f"{decryptedData}{c}"
     return decryptedData
 
-data =  """
-       Treffen wir uns morgen um 14 Uhr am alten Baum!
-        """
-key = 1
-encryptedData = encrypt(data, key)
-decryptedData = decrypt(encryptedData, key)
+def readData(file):
+    data = ""
+    with open(file, 'r') as f:
+        for line in f:
+            data += line
+    return data
 
-print(f"Encrypted: {encryptedData}\nDecrypted: {decryptedData}")
+def generateKey():
+    return randint(1, 26)
+
+# mainloop
+if __name__ == "__main__":
+    key = generateKey()
+    data = readData("./originalData.txt")
+
+    encryptedData = encrypt(data, key)
+    decryptedData = decrypt(encryptedData, key)
+
+    print(f"Encrypted: {encryptedData}\nDecrypted: {decryptedData}")

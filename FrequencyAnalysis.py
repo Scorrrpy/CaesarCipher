@@ -7,7 +7,7 @@ def frequency_analysis(text):
     counts = Counter(c.lower() for c in text if c.lower() in alphabet)
     total = sum(counts.values())
 
-    print("Häufigkeitsanalyse (nur Buchstaben):")
+    print("Frequency analysis (letters only):")
     for char, count in counts.most_common():
         percentage = (count / total) * 100
         print(f"{char.upper()}: {count} ({percentage:.2f}%)")
@@ -17,20 +17,22 @@ def frequency_analysis(text):
 def guess_caesar_key(ciphertext):
     counts = frequency_analysis(ciphertext)
     if not counts:
-        print("Keine Buchstaben gefunden.")
+        print("No letter found.")
         return None
 
-    # Meistverwendeter Buchstabe im Text
+    # Letter most often appearing in text
     most_common_letter = counts.most_common(1)[0][0]
 
-    # In der deutschen Sprache ist 'e' der häufigste Buchstabe
+    # Most common letter in English language -> 'e'
     assumed_plain_letter = 'e'
 
-    # Schlüssel schätzen (Unterschied der Positionen im Alphabet)
+    # determine key (difference of positions in the alphabet)
     key = (alphabet.index(most_common_letter) - alphabet.index(assumed_plain_letter)) % 26
-    print(f"\n🔑 Geschätzter Schlüssel (basierend auf '{most_common_letter.upper()}' → 'E'): {key}")
+    print(f"\n🔑 Estimated key (based on '{most_common_letter.upper()}' → 'E'): {key}")
     return key
 
-data = "Wir treffen und um 9 Uhr auf der Weide im südlichen Morrowind oder auch nicht. Ich weiß außerdem dein Geheimstes Geheimnis ;)"
-encryptedData = CaesarCipher.encrypt(data, 11)
-print(guess_caesar_key(encryptedData))
+if __name__ == "__main__":
+    key = CaesarCipher.generateKey()
+    data = CaesarCipher.readData("./originalData.txt")
+    encryptedData = CaesarCipher.encrypt(data, key)
+    print(f"{guess_caesar_key(encryptedData)}\nReal Key: {key}")
