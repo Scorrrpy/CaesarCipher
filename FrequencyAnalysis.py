@@ -35,4 +35,12 @@ if __name__ == "__main__":
     key = CaesarCipher.generateKey()
     data = CaesarCipher.readData("./originalData.txt")
     encryptedData = CaesarCipher.encrypt(data, key)
-    print(f"{guess_caesar_key(encryptedData)}\nReal Key: {key}")
+    guessed_key = guess_caesar_key(encryptedData)
+    print(f"""
+Encrypted message: 
+{encryptedData}\n
+Real key: {key} | Guessed Key: {guessed_key}\n
+Decryption Approach:
+{CaesarCipher.decrypt(encryptedData, guessed_key)}\n
+          """
+          )

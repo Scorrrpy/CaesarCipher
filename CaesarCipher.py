@@ -50,4 +50,4 @@ if __name__ == "__main__":
     encryptedData = encrypt(data, key)
     decryptedData = decrypt(encryptedData, key)
 
-    print(f"Encrypted: {encryptedData}\nDecrypted: {decryptedData}")
+    print(f"Encrypted:\n{encryptedData}\n\nDecrypted:\n{decryptedData}")
